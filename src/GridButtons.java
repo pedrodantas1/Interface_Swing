@@ -9,7 +9,7 @@ public class GridButtons extends JPanel implements ActionListener {
     private static LayoutManager layout = new GridBagLayout();
     private GridBagConstraints gbc = new GridBagConstraints();
     
-    private JButton[] buttons;  //Posteriormente sera customButton
+    private CustomButton[] buttons;  //Posteriormente sera customButton
     private int numButtons;
     private int cols;
     private int rows;
@@ -29,9 +29,9 @@ public class GridButtons extends JPanel implements ActionListener {
         if (this.cols == this.numButtons){
             this.rows = 1;
         }else{
-            this.rows = this.numButtons / this.cols + 1;
+            this.rows = this.numButtons / this.cols;
         }
-        buttons = new JButton[numButtons];
+        buttons = new CustomButton[numButtons];
         this.border = null;
         this.bgColor = null;
         this.textColor = Color.BLACK;
@@ -65,21 +65,26 @@ public class GridButtons extends JPanel implements ActionListener {
         int row = 0;
         int col = 0;
         for (int i=0; i<numButtons; i++){
-            JButton button = new JButton(names[i]);
+            CustomButton button = new CustomButton(names[i]);
+            button.setPadding(140, 65);
             button.setFont(font);
             button.setBorder(border);
             button.setBackground(bgColor);
             button.setForeground(textColor);
+            gbc.insets.set(0, 0, 0, 0);
             gbc.fill =  GridBagConstraints.NONE;
-            gbc.ipadx = 80;
-            gbc.ipady = 20;
+            gbc.ipadx = 0;
+            gbc.ipady = 0;
             gbc.weightx = 0;
             gbc.weighty = 0;
+            if (col != cols-1){
+                gbc.insets.right = 60;
+            }
+            if (row != rows-1){
+                gbc.insets.bottom = 30;
+            }
             gbc.gridx = col++;
             gbc.gridy = row;
-            if (col != cols)
-                gbc.insets.set(0, 0, 40, 60);
-
 
             if (i == 3){
                 button.addActionListener(this);

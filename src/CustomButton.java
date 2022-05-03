@@ -20,4 +20,7 @@ public class CustomButton extends JButton {
         super(nome, icon);
     }
 
+    public void setPadding(int width, int height) {
+        this.add(Box.createRigidArea(new Dimension(width, height)));
+    }
 }

@@ -45,72 +45,26 @@ public class AppInterface extends JFrame {
         titulo.setBackground(Color.pink);
         header.add(titulo, BorderLayout.NORTH);
         
-        JPanel buttonsPanel = new JPanel();
-        buttonsPanel.setBorder(BorderFactory.createEmptyBorder(0, 150, 0, 150));
-        GridLayout grid = new GridLayout(0, 3);
-        buttonsPanel.setLayout(grid);
+        GridButtons buttonsPanel = new GridButtons(6, 3);
+        String[] buttonNames = {"União", "Intersecção", "Concatenação",
+                                "Complemento", "Estrela", 
+                                "<html><center>Gerar AFD<br/>equivalente</center></html>"};
+        //buttonsPanel.setBorder(BorderFactory.createEmptyBorder(0, 150, 0, 150));
         buttonsPanel.setBackground(Color.BLUE);
-        grid.setHgap(60);
-        grid.setVgap(40);
-        JButton b1;
         Font buttonFont = new Font("Arial", Font.BOLD, 16);
-        Border border = BorderFactory.createLineBorder(Color.BLACK, 3);
-
-        b1 = new JButton("União");
-        b1.setFont(buttonFont);
-        b1.setBorder(border);
-        b1.setBackground(Color.WHITE);
-        b1.add(Box.createRigidArea(new Dimension(120, 60)));
-        buttonsPanel.add(b1);
-        
-        b1 = new JButton("Intersecção");
-        b1.setFont(buttonFont);
-        b1.setBorder(border);
-        b1.setBackground(Color.WHITE);
-        b1.add(Box.createRigidArea(new Dimension(120, 60)));
-        buttonsPanel.add(b1);
-
-        b1 = new JButton("Concatenação");
-        b1.setFont(buttonFont);
-        b1.setBorder(border);
-        b1.setBackground(Color.WHITE);
-        b1.add(Box.createRigidArea(new Dimension(120, 60)));
-        buttonsPanel.add(b1);
-
-        b1 = new JButton("Complemento");
-        b1.setFont(buttonFont);
-        b1.setBorder(border);
-        b1.setBackground(Color.WHITE);
-        b1.add(Box.createRigidArea(new Dimension(120, 60)));
-        b1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                NewScreenOneAutomaton panel = new NewScreenOneAutomaton();
-                setContentPane(panel);
-                setVisible(true);
-            }
-        });
-        buttonsPanel.add(b1);
-
-        b1 = new JButton("Estrela");
-        b1.setFont(buttonFont);
-        b1.setBorder(border);
-        b1.setBackground(Color.WHITE);
-        b1.add(Box.createRigidArea(new Dimension(120, 60)));
-        buttonsPanel.add(b1);
-
-        b1 = new JButton("<html><center>Gerar AFD<br/>equivalente</center></html>");
-        b1.setFont(buttonFont);
-        b1.setBorder(border);
-        b1.setBackground(Color.WHITE);
-        b1.add(Box.createRigidArea(new Dimension(120, 60)));
-        buttonsPanel.add(b1);
+        Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
+        buttonsPanel.setButtonFont(buttonFont);
+        buttonsPanel.setBorder(border);
+        buttonsPanel.setBgColor(Color.WHITE);
+        buttonsPanel.setTextColor(Color.BLACK);
+        buttonsPanel.addButtons(buttonNames);
 
         JPanel footer = new JPanel(new BorderLayout());
         JLabel creditos = new JLabel("<html>Desenvolvido por alunos da UFS - DSI &copy;</html>");
         textFont = new Font("Comic Sans MS", Font.BOLD|Font.ITALIC, 14);
         creditos.setFont(textFont);
         creditos.setForeground(Color.BLUE);
-        footer.setBorder(BorderFactory.createEmptyBorder(150, 5, 5, 0));
+        footer.setBorder(BorderFactory.createEmptyBorder(100, 5, 5, 0));
         footer.add(creditos, BorderLayout.WEST);
 
         mainPanel.add(header, BorderLayout.NORTH);
