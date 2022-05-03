@@ -11,26 +11,11 @@ public class AppInterface extends JFrame {
 
     public AppInterface(String titulo) {
         super(titulo);
-        //setResizable(false);
+        setResizable(false);
         setSize(900, 600);
         setMinimumSize(getSize());
         setLocationRelativeTo(null);
         homeScreen = new JPanel(new BorderLayout());
-        this.addComponentListener(new ComponentAdapter(){
-            public void componentResized(ComponentEvent e){
-                Dimension currentSize = AppInterface.this.getSize();
-                Dimension minSize = AppInterface.this.getMinimumSize();
-                if (currentSize.width < minSize.width){
-                    currentSize.width = minSize.width;
-                    setLocationRelativeTo(null);
-                }
-                if (currentSize.height < minSize.height){
-                    currentSize.height = minSize.height;
-                    setLocationRelativeTo(null);
-                }
-                AppInterface.this.setSize(currentSize);
-            }
-        });
     }
 
     public JPanel createHomeScreen() {
@@ -45,30 +30,33 @@ public class AppInterface extends JFrame {
         titulo.setBackground(Color.pink);
         header.add(titulo, BorderLayout.NORTH);
         
+        JPanel teste = new JPanel(new BorderLayout());
         GridButtons buttonsPanel = new GridButtons(6, 3);
         String[] buttonNames = {"União", "Intersecção", "Concatenação",
                                 "Complemento", "Estrela", 
                                 "<html><center>Gerar AFD<br/>equivalente</center></html>"};
-        //buttonsPanel.setBorder(BorderFactory.createEmptyBorder(0, 150, 0, 150));
+        //teste.setBorder(BorderFactory.createTitledBorder("Operações"));
         buttonsPanel.setBackground(Color.BLUE);
         Font buttonFont = new Font("Arial", Font.BOLD, 16);
-        Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
+        Border border = BorderFactory.createLineBorder(Color.BLACK, 3);
         buttonsPanel.setButtonFont(buttonFont);
         buttonsPanel.setBorder(border);
         buttonsPanel.setBgColor(Color.WHITE);
         buttonsPanel.setTextColor(Color.BLACK);
         buttonsPanel.addButtons(buttonNames);
+        teste.add(buttonsPanel, BorderLayout.CENTER);
 
         JPanel footer = new JPanel(new BorderLayout());
         JLabel creditos = new JLabel("<html>Desenvolvido por alunos da UFS - DSI &copy;</html>");
         textFont = new Font("Comic Sans MS", Font.BOLD|Font.ITALIC, 14);
         creditos.setFont(textFont);
         creditos.setForeground(Color.BLUE);
+        footer.setBackground(Color.BLACK);
         footer.setBorder(BorderFactory.createEmptyBorder(100, 5, 5, 0));
         footer.add(creditos, BorderLayout.WEST);
 
         mainPanel.add(header, BorderLayout.NORTH);
-        mainPanel.add(buttonsPanel, BorderLayout.CENTER);
+        mainPanel.add(teste, BorderLayout.CENTER);
         mainPanel.add(footer, BorderLayout.SOUTH);
 
         return mainPanel;

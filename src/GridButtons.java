@@ -66,7 +66,7 @@ public class GridButtons extends JPanel implements ActionListener {
         int col = 0;
         for (int i=0; i<numButtons; i++){
             CustomButton button = new CustomButton(names[i]);
-            button.setPadding(140, 65);
+            button.setPadding(150, 70);
             button.setFont(font);
             button.setBorder(border);
             button.setBackground(bgColor);
