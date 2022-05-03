@@ -1,0 +1,102 @@
+import javax.swing.*;
+import javax.swing.border.Border;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class GridButtons extends JPanel implements ActionListener {
+    private static LayoutManager layout = new GridBagLayout();
+    private GridBagConstraints gbc = new GridBagConstraints();
+    
+    private JButton[] buttons;  //Posteriormente sera customButton
+    private int numButtons;
+    private int cols;
+    private int rows;
+
+    private Font font;
+    private Border border;
+    private Color bgColor;
+    private Color textColor;
+    
+    public GridButtons(int numButtons, int cols) {
+        super(layout);
+        this.numButtons = numButtons;
+        this.cols = cols;
+        if (cols > numButtons){
+            this.cols = this.numButtons;
+        }
+        if (this.cols == this.numButtons){
+            this.rows = 1;
+        }else{
+            this.rows = this.numButtons / this.cols + 1;
+        }
+        buttons = new JButton[numButtons];
+        this.border = null;
+        this.bgColor = null;
+        this.textColor = Color.BLACK;
+    }
+
+    public void setButtonFont(Font font) {
+        this.font = font;
+    }
+
+    public void setFontSize(int size) {
+        font = font.deriveFont(font.getStyle(), size);
+    }
+
+    public void setFontStyle(int style) {
+        font = font.deriveFont(style);
+    }
+
+    public void setBorder(Border border) {
+        this.border = border;
+    }
+
+    public void setBgColor(Color color) {
+        this.bgColor = color;
+    }
+
+    public void setTextColor(Color color) {
+        this.textColor = color;
+    }
+
+    public void addButtons(String[] names) {
+        int row = 0;
+        int col = 0;
+        for (int i=0; i<numButtons; i++){
+            JButton button = new JButton(names[i]);
+            button.setFont(font);
+            button.setBorder(border);
+            button.setBackground(bgColor);
+            button.setForeground(textColor);
+            gbc.fill =  GridBagConstraints.NONE;
+            gbc.ipadx = 80;
+            gbc.ipady = 20;
+            gbc.weightx = 0;
+            gbc.weighty = 0;
+            gbc.gridx = col++;
+            gbc.gridy = row;
+            if (col != cols)
+                gbc.insets.set(0, 0, 40, 60);
+
+
+            if (i == 3){
+                button.addActionListener(this);
+            }
+            buttons[i] = button;
+            add(button, gbc);
+
+            if (col == cols){
+                col = 0;
+                row++;
+            }
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        System.out.println("\nCliquei");
+    }
+
+}
