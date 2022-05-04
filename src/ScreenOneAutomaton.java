@@ -5,12 +5,22 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class NewScreenOneAutomaton extends JPanel {
+public class ScreenOneAutomaton extends JPanel {
     private AppInterface controller;
 
-    public NewScreenOneAutomaton(AppInterface frame) {
+    public ScreenOneAutomaton(AppInterface frame) {
         super(new BorderLayout());
         this.controller = frame;
+        createScreen();
+    }
+
+    private void createScreen() {
+        createHeader();
+        createBody();
+        createFooter();
+    }
+
+    private void createHeader() {
         JPanel header = new JPanel(new BorderLayout());
         JLabel titulo = new JLabel("Complemento de um autômato", JLabel.CENTER);
         Font textFont = new Font("Arial", Font.BOLD, 40);
@@ -41,6 +51,10 @@ public class NewScreenOneAutomaton extends JPanel {
         });
         header.add(voltar, BorderLayout.WEST);
 
+        add(header, BorderLayout.NORTH);
+    }
+
+    private void createBody() {
         JPanel operationPanel = new JPanel(new GridBagLayout());
         operationPanel.setBackground(Color.PINK);
         GridBagConstraints gbc = new GridBagConstraints();
@@ -49,11 +63,9 @@ public class NewScreenOneAutomaton extends JPanel {
         //Selecionar automato
         //Label
         JLabel automatoText = new JLabel("Autômato:");
-        textFont = new Font("Arial", Font.BOLD, 18);
+        Font textFont = new Font("Arial", Font.BOLD, 18);
         automatoText.setFont(textFont);
-        //gbc.fill =  GridBagConstraints.HORIZONTAL;
         gbc.anchor = GridBagConstraints.FIRST_LINE_START;
-        //gbc.weightx = 0.1;
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.insets = new Insets(0, 0, 0, 10);
@@ -101,16 +113,18 @@ public class NewScreenOneAutomaton extends JPanel {
         gbc.insets.set(50, 0, 0, 10);
         operationPanel.add(b1, gbc);
 
+        add(operationPanel, BorderLayout.CENTER);
+    }
+
+    private void createFooter() {
         JPanel footer = new JPanel(new BorderLayout());
         JLabel creditos = new JLabel("<html>Desenvolvido por alunos da UFS - DSI &copy;</html>");
-        textFont = new Font("Comic Sans MS", Font.BOLD|Font.ITALIC, 14);
+        Font textFont = new Font("Comic Sans MS", Font.BOLD|Font.ITALIC, 14);
         creditos.setFont(textFont);
         creditos.setForeground(Color.BLUE);
         footer.setBorder(BorderFactory.createEmptyBorder(100, 5, 5, 0));
         footer.add(creditos, BorderLayout.WEST);
-
-        add(header, BorderLayout.NORTH);
-        add(operationPanel, BorderLayout.CENTER);
+        
         add(footer, BorderLayout.SOUTH);
     }
 

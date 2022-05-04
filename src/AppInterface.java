@@ -1,10 +1,11 @@
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+
 public class AppInterface extends JFrame {
     private static AppInterface frame;
     public static JPanel homeScreen;
-    public static NewScreenOneAutomaton screenOneAutomaton;
+    public static ScreenOneAutomaton screenOneAutomaton;
 
     public AppInterface(String titulo) {
         super(titulo);
@@ -63,7 +64,7 @@ public class AppInterface extends JFrame {
         frame.setContentPane(homeScreen);
 
         //Cria as telas necessarias
-        screenOneAutomaton = new NewScreenOneAutomaton(frame);
+        screenOneAutomaton = new ScreenOneAutomaton(frame);
         
         frame.setVisible(true);
     }
