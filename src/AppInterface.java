@@ -1,21 +1,16 @@
 import javax.swing.*;
 import javax.swing.border.Border;
-
 import java.awt.*;
-import java.awt.event.*;
-import java.net.URL;
-
 public class AppInterface extends JFrame {
     private static AppInterface frame;
-    private static JPanel homeScreen;
+    public static JPanel homeScreen;
+    public static NewScreenOneAutomaton screenOneAutomaton;
 
     public AppInterface(String titulo) {
         super(titulo);
         setResizable(false);
         setSize(900, 600);
-        setMinimumSize(getSize());
         setLocationRelativeTo(null);
-        homeScreen = new JPanel(new BorderLayout());
     }
 
     public JPanel createHomeScreen() {
@@ -30,21 +25,18 @@ public class AppInterface extends JFrame {
         titulo.setBackground(Color.pink);
         header.add(titulo, BorderLayout.NORTH);
         
-        JPanel teste = new JPanel(new BorderLayout());
-        GridButtons buttonsPanel = new GridButtons(6, 3);
+        GridButtons buttonsPanel = new GridButtons(frame, 6, 3);
         String[] buttonNames = {"União", "Intersecção", "Concatenação",
                                 "Complemento", "Estrela", 
                                 "<html><center>Gerar AFD<br/>equivalente</center></html>"};
-        //teste.setBorder(BorderFactory.createTitledBorder("Operações"));
-        buttonsPanel.setBackground(Color.BLUE);
         Font buttonFont = new Font("Arial", Font.BOLD, 16);
         Border border = BorderFactory.createLineBorder(Color.BLACK, 3);
+        buttonsPanel.setBackground(Color.BLUE);
         buttonsPanel.setButtonFont(buttonFont);
         buttonsPanel.setBorder(border);
         buttonsPanel.setBgColor(Color.WHITE);
         buttonsPanel.setTextColor(Color.BLACK);
         buttonsPanel.addButtons(buttonNames);
-        teste.add(buttonsPanel, BorderLayout.CENTER);
 
         JPanel footer = new JPanel(new BorderLayout());
         JLabel creditos = new JLabel("<html>Desenvolvido por alunos da UFS - DSI &copy;</html>");
@@ -56,129 +48,23 @@ public class AppInterface extends JFrame {
         footer.add(creditos, BorderLayout.WEST);
 
         mainPanel.add(header, BorderLayout.NORTH);
-        mainPanel.add(teste, BorderLayout.CENTER);
+        mainPanel.add(buttonsPanel, BorderLayout.CENTER);
         mainPanel.add(footer, BorderLayout.SOUTH);
 
         return mainPanel;
     }
 
-    private class NewScreenOneAutomaton extends JPanel {
-
-        public NewScreenOneAutomaton() {
-            super(new BorderLayout());
-            JPanel header = new JPanel(new BorderLayout());
-            JLabel titulo = new JLabel("Complemento de um autômato", JLabel.CENTER);
-            Font textFont = new Font("Arial", Font.BOLD, 40);
-            titulo.setFont(textFont);
-            titulo.setForeground(Color.WHITE);
-            titulo.setPreferredSize(new Dimension(900, 200));
-            titulo.setOpaque(true);
-            titulo.setBackground(Color.BLUE);
-            header.add(titulo, BorderLayout.CENTER);
-
-            JButton voltar;
-            Font voltaFont = new Font("Arial", Font.BOLD, 18);
-            titulo.setFont(textFont);
-            Border border3 = BorderFactory.createLineBorder(Color.BLACK, 2);
-            voltar = new JButton("Voltar");
-            voltar.setFont(voltaFont);
-            voltar.setBorder(border3);
-            //voltar.setBackground(Color.RED);
-            voltar.setForeground(Color.BLACK);
-            //voltar.setContentAreaFilled(false);
-            voltar.setFocusPainted(false);
-            voltar.add(Box.createRigidArea(new Dimension(80, 0)));
-            voltar.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    frame.setContentPane(homeScreen);
-                    frame.setVisible(true);
-                }
-            });
-            header.add(voltar, BorderLayout.WEST);
-
-            JPanel operationPanel = new JPanel(new GridBagLayout());
-            operationPanel.setBackground(Color.PINK);
-            GridBagConstraints gbc = new GridBagConstraints();
-            operationPanel.setBorder(BorderFactory.createEmptyBorder(0, 125, 0, 125));
-
-            //Selecionar automato
-            //Label
-            JLabel automatoText = new JLabel("Autômato:");
-            textFont = new Font("Arial", Font.BOLD, 18);
-            automatoText.setFont(textFont);
-            //gbc.fill =  GridBagConstraints.HORIZONTAL;
-            gbc.anchor = GridBagConstraints.FIRST_LINE_START;
-            //gbc.weightx = 0.1;
-            gbc.gridx = 0;
-            gbc.gridy = 0;
-            gbc.insets = new Insets(0, 0, 0, 10);
-            operationPanel.add(automatoText, gbc);
-
-            //TextField (Por enquanto nao editavel; Atualiza com o path apos pesquisar o arquivo)
-            JTextField textField = new JTextField(40);
-            textField.setEditable(false);
-            gbc.fill =  GridBagConstraints.HORIZONTAL;
-            gbc.anchor = GridBagConstraints.CENTER;
-            gbc.ipady = 5;
-            gbc.weightx = 1;
-            gbc.gridx = 1;
-            gbc.gridy = 0;
-            gbc.insets.set(0, 0, 0, 10);
-            operationPanel.add(textField, gbc);
-
-            //Botao de pesquisar arquivo (FileChooser)
-            JButton b1;
-            b1 = new JButton(new ImageIcon(AppInterface.class.getResource("procurar.png")));
-            gbc.fill =  GridBagConstraints.NONE;
-            gbc.anchor = GridBagConstraints.FIRST_LINE_END;
-            gbc.ipadx = -25;
-            gbc.ipady = -2;
-            gbc.weightx = 0;
-            gbc.gridx = 2;
-            gbc.gridy = 0;
-            gbc.insets.set(0, 0, 0, 0);
-            operationPanel.add(b1, gbc);
-
-            Font buttonFont = new Font("Arial", Font.BOLD, 16);
-            Border border = BorderFactory.createRaisedBevelBorder();
-
-            b1 = new JButton("<html><center>Realizar<br/>operação</center></html>");
-            b1.setFont(buttonFont);
-            b1.setBorder(border);
-            b1.setFocusPainted(false);
-            gbc.fill =  GridBagConstraints.NONE;
-            gbc.anchor = GridBagConstraints.CENTER;
-            gbc.ipadx = 80;
-            gbc.ipady = 20;
-            gbc.weightx = 0;
-            gbc.gridx = 1;
-            gbc.gridy = 1;
-            gbc.insets.set(50, 0, 0, 10);
-            operationPanel.add(b1, gbc);
-
-            JPanel footer = new JPanel(new BorderLayout());
-            JLabel creditos = new JLabel("<html>Desenvolvido por alunos da UFS - DSI &copy;</html>");
-            textFont = new Font("Comic Sans MS", Font.BOLD|Font.ITALIC, 14);
-            creditos.setFont(textFont);
-            creditos.setForeground(Color.BLUE);
-            footer.setBorder(BorderFactory.createEmptyBorder(100, 5, 5, 0));
-            footer.add(creditos, BorderLayout.WEST);
-
-            add(header, BorderLayout.NORTH);
-            add(operationPanel, BorderLayout.CENTER);
-            add(footer, BorderLayout.SOUTH);
-        }
-
-    }
-
     private static void createAndShowGUI() {
         frame = new AppInterface("Operador de autômatos");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    
-        //Criar containers e fazer as contruções necessárias
+        
+        //Cria tela inicial e seta seu conteudo no frame
         homeScreen = frame.createHomeScreen();
         frame.setContentPane(homeScreen);
 
+        //Cria as telas necessarias
+        screenOneAutomaton = new NewScreenOneAutomaton(frame);
+        
         frame.setVisible(true);
     }
 

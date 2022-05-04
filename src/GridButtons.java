@@ -8,8 +8,10 @@ import java.awt.event.ActionListener;
 public class GridButtons extends JPanel implements ActionListener {
     private static LayoutManager layout = new GridBagLayout();
     private GridBagConstraints gbc = new GridBagConstraints();
+
+    private AppInterface controller;
     
-    private CustomButton[] buttons;  //Posteriormente sera customButton
+    private CustomButton[] buttons;
     private int numButtons;
     private int cols;
     private int rows;
@@ -19,8 +21,9 @@ public class GridButtons extends JPanel implements ActionListener {
     private Color bgColor;
     private Color textColor;
     
-    public GridButtons(int numButtons, int cols) {
+    public GridButtons(AppInterface frame, int numButtons, int cols) {
         super(layout);
+        this.controller = frame;
         this.numButtons = numButtons;
         this.cols = cols;
         if (cols > numButtons){
@@ -101,7 +104,8 @@ public class GridButtons extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("\nCliquei");
+        controller.setContentPane(AppInterface.screenOneAutomaton);
+        controller.setVisible(true);
     }
 
 }
