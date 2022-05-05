@@ -25,19 +25,23 @@ public class GridButtons extends JPanel implements ActionListener {
         super(layout);
         this.controller = frame;
         this.numButtons = numButtons;
-        this.cols = cols;
-        if (cols > numButtons){
-            this.cols = this.numButtons;
-        }
-        if (this.cols == this.numButtons){
+        defineColsAndRows(numButtons, cols);
+        buttons = new CustomButton[numButtons];
+        CustomButton temp = new CustomButton();
+        this.font = temp.getFont();
+        this.border = temp.getBorder();
+        this.bgColor = temp.getBackground();
+        this.textColor = Color.BLACK;
+    }
+
+    private void defineColsAndRows(int numButtons, int cols) {
+        if (cols >= numButtons){
+            this.cols = numButtons;
             this.rows = 1;
         }else{
-            this.rows = this.numButtons / this.cols;
+            this.cols = cols;
+            this.rows = (int) Math.ceil((double) numButtons / cols);
         }
-        buttons = new CustomButton[numButtons];
-        this.border = null;
-        this.bgColor = null;
-        this.textColor = Color.BLACK;
     }
 
     public void setButtonFont(Font font) {
@@ -89,9 +93,12 @@ public class GridButtons extends JPanel implements ActionListener {
             gbc.gridx = col++;
             gbc.gridy = row;
 
-            if (i == 3){
-                button.addActionListener(this);
+            if (i < 3){
+                button.setActionCommand("doisAutomatos");
+            }else{
+                button.setActionCommand("umAutomato");
             }
+            button.addActionListener(this);
             buttons[i] = button;
             add(button, gbc);
 
@@ -104,7 +111,14 @@ public class GridButtons extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        controller.setContentPane(AppInterface.screenOneAutomaton);
+        String action = e.getActionCommand();
+        if (action.equals("umAutomato")){
+            System.out.println("\nUm automato");
+            controller.setContentPane(AppInterface.screenOneAutomaton);
+        }else{
+            System.out.println("\nDois automatos");
+            controller.setContentPane(AppInterface.screenOneAutomaton);//doisAutomatos
+        }
         controller.setVisible(true);
     }
 
