@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ScreenOneAutomaton extends JPanel implements ActionListener {
+public class ScreenAutomatons extends JPanel implements ActionListener {
     private AppInterface controller;
     private String title;
     private GridBagConstraints gbc;
@@ -20,7 +20,7 @@ public class ScreenOneAutomaton extends JPanel implements ActionListener {
     private JButton backButton;
     private JPanel typeAutBox;
 
-    public ScreenOneAutomaton(AppInterface frame) {
+    public ScreenAutomatons(AppInterface frame) {
         super(new BorderLayout());
         this.controller = frame;
         this.title = "Título indefinido";

@@ -108,7 +108,7 @@ public class GridButtons extends JPanel implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         String action = e.getActionCommand();
-        ScreenOneAutomaton newScreen = new ScreenOneAutomaton(controller);
+        ScreenAutomatons newScreen = new ScreenAutomatons(controller);
         if (action.equals("complemento")){
             newScreen.setTitle("Complemento de um autômato");
             newScreen.createScreenOne();
