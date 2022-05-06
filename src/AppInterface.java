@@ -5,7 +5,6 @@ import java.awt.*;
 public class AppInterface extends JFrame {
     private static AppInterface frame;
     public static JPanel homeScreen;
-    public static ScreenOneAutomaton screenOneAutomaton;
 
     public AppInterface(String titulo) {
         super(titulo);
@@ -62,9 +61,6 @@ public class AppInterface extends JFrame {
         //Cria tela inicial e seta seu conteudo no frame
         homeScreen = frame.createHomeScreen();
         frame.setContentPane(homeScreen);
-
-        //Cria as telas necessarias
-        screenOneAutomaton = new ScreenOneAutomaton(frame);
         
         frame.setVisible(true);
     }

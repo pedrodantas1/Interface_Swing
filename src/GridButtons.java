@@ -109,15 +109,20 @@ public class GridButtons extends JPanel implements ActionListener {
         }
     }
 
-    @Override
     public void actionPerformed(ActionEvent e) {
         String action = e.getActionCommand();
         if (action.equals("umAutomato")){
             System.out.println("\nUm automato");
-            controller.setContentPane(AppInterface.screenOneAutomaton);
+            ScreenOneAutomaton newScreen = new ScreenOneAutomaton
+                                               (controller, "Um automato");
+            newScreen.createScreenOne();
+            controller.setContentPane(newScreen);
         }else{
             System.out.println("\nDois automatos");
-            controller.setContentPane(AppInterface.screenOneAutomaton);//doisAutomatos
+            ScreenOneAutomaton newScreen = new ScreenOneAutomaton
+                                               (controller, "Dois automatos");
+            newScreen.createScreenTwo();
+            controller.setContentPane(newScreen);
         }
         controller.setVisible(true);
     }
