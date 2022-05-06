@@ -20,9 +20,9 @@ public class AppInterface extends JFrame {
         Font textFont = new Font("Arial", Font.BOLD, 40);
         titulo.setFont(textFont);
         titulo.setForeground(Color.WHITE);
-        titulo.setPreferredSize(new Dimension(900, 200));
+        titulo.setPreferredSize(new Dimension(900, 150));
         titulo.setOpaque(true);
-        titulo.setBackground(Color.pink);
+        titulo.setBackground(Color.BLACK);
         header.add(titulo, BorderLayout.NORTH);
         
         GridButtons buttonsPanel = new GridButtons(frame, 6, 3);
@@ -43,9 +43,11 @@ public class AppInterface extends JFrame {
         textFont = new Font("Comic Sans MS", Font.BOLD|Font.ITALIC, 14);
         creditos.setFont(textFont);
         creditos.setForeground(Color.BLUE);
+        creditos.setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 0));
         footer.setBackground(Color.BLACK);
-        footer.setBorder(BorderFactory.createEmptyBorder(100, 5, 5, 0));
-        footer.add(creditos, BorderLayout.WEST);
+        footer.setPreferredSize(new Dimension(900, 150));
+        //footer.setBorder(BorderFactory.createEmptyBorder(100, 5, 5, 0));
+        footer.add(creditos, BorderLayout.SOUTH);
 
         mainPanel.add(header, BorderLayout.NORTH);
         mainPanel.add(buttonsPanel, BorderLayout.CENTER);
