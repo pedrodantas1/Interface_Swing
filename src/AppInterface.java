@@ -29,6 +29,8 @@ public class AppInterface extends JFrame {
         String[] buttonNames = {"União", "Intersecção", "Concatenação",
                                 "Complemento", "Estrela", 
                                 "<html><center>Gerar AFD<br/>equivalente</center></html>"};
+        String[] actions = {"uniao", "interseccao", "concatenacao",
+                            "complemento", "estrela", "gerarAFD"};
         Font buttonFont = new Font("Arial", Font.BOLD, 16);
         Border border = BorderFactory.createLineBorder(Color.BLACK, 3);
         buttonsPanel.setBackground(Color.BLUE);
@@ -36,7 +38,7 @@ public class AppInterface extends JFrame {
         buttonsPanel.setBorder(border);
         buttonsPanel.setBgColor(Color.WHITE);
         buttonsPanel.setTextColor(Color.BLACK);
-        buttonsPanel.addButtons(buttonNames);
+        buttonsPanel.addButtons(buttonNames, actions);
 
         JPanel footer = new JPanel(new BorderLayout());
         JLabel creditos = new JLabel("<html>Desenvolvido por alunos da UFS - DSI &copy;</html>");
@@ -46,7 +48,6 @@ public class AppInterface extends JFrame {
         creditos.setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 0));
         footer.setBackground(Color.BLACK);
         footer.setPreferredSize(new Dimension(900, 150));
-        //footer.setBorder(BorderFactory.createEmptyBorder(100, 5, 5, 0));
         footer.add(creditos, BorderLayout.SOUTH);
 
         mainPanel.add(header, BorderLayout.NORTH);

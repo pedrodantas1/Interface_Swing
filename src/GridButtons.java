@@ -68,7 +68,7 @@ public class GridButtons extends JPanel implements ActionListener {
         this.textColor = color;
     }
 
-    public void addButtons(String[] names) {
+    public void addButtons(String[] names, String[] actions) {
         int row = 0;
         int col = 0;
         for (int i=0; i<numButtons; i++){
@@ -78,6 +78,7 @@ public class GridButtons extends JPanel implements ActionListener {
             button.setBorder(border);
             button.setBackground(bgColor);
             button.setForeground(textColor);
+            button.setFocusPainted(false);
             gbc.insets.set(0, 0, 0, 0);
             gbc.fill =  GridBagConstraints.NONE;
             gbc.ipadx = 0;
@@ -93,11 +94,7 @@ public class GridButtons extends JPanel implements ActionListener {
             gbc.gridx = col++;
             gbc.gridy = row;
 
-            if (i < 3){
-                button.setActionCommand("doisAutomatos");
-            }else{
-                button.setActionCommand("umAutomato");
-            }
+            button.setActionCommand(actions[i]);
             button.addActionListener(this);
             buttons[i] = button;
             add(button, gbc);
@@ -111,19 +108,27 @@ public class GridButtons extends JPanel implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         String action = e.getActionCommand();
-        if (action.equals("umAutomato")){
-            System.out.println("\nUm automato");
-            ScreenOneAutomaton newScreen = new ScreenOneAutomaton
-                                               (controller, "Um automato");
+        ScreenOneAutomaton newScreen = new ScreenOneAutomaton(controller);
+        if (action.equals("complemento")){
+            newScreen.setTitle("Complemento de um autômato");
             newScreen.createScreenOne();
-            controller.setContentPane(newScreen);
-        }else{
-            System.out.println("\nDois automatos");
-            ScreenOneAutomaton newScreen = new ScreenOneAutomaton
-                                               (controller, "Dois automatos");
+        }else if (action.equals("estrela")){
+            newScreen.setTitle("Estrela de um autômato");
+            newScreen.createScreenOne();
+        }else if (action.equals("gerarAFD")){
+            newScreen.setTitle("Gerar AFD equivalente a um AFN");
+            newScreen.createScreenOne();
+        }else if (action.equals("uniao")){
+            newScreen.setTitle("União de dois autômatos");
             newScreen.createScreenTwo();
-            controller.setContentPane(newScreen);
+        }else if (action.equals("interseccao")){
+            newScreen.setTitle("Intersecção de dois autômatos");
+            newScreen.createScreenTwo();
+        }else if (action.equals("concatenacao")){
+            newScreen.setTitle("Concatenação de dois autômatos");
+            newScreen.createScreenTwo();
         }
+        controller.setContentPane(newScreen);
         controller.setVisible(true);
     }
 

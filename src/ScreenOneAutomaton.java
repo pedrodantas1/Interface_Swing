@@ -20,16 +20,20 @@ public class ScreenOneAutomaton extends JPanel implements ActionListener {
     private JButton backButton;
     private JPanel typeAutBox;
 
-    public ScreenOneAutomaton(AppInterface frame, String title) {
+    public ScreenOneAutomaton(AppInterface frame) {
         super(new BorderLayout());
         this.controller = frame;
-        this.title = title;
+        this.title = "Título indefinido";
         this.gbc = new GridBagConstraints();
 
         buttonFont = new Font("Arial", Font.BOLD, 16);
         border = BorderFactory.createRaisedBevelBorder();
         
         createButtons();
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     private void createButtons() {
@@ -310,7 +314,7 @@ public class ScreenOneAutomaton extends JPanel implements ActionListener {
     private void createFooter() {
         JPanel footer = new JPanel(new BorderLayout());
         JLabel creditos = new JLabel("<html>Desenvolvido por alunos da UFS - DSI &copy;</html>");
-        Font textFont = new Font("Comic Sans MS", Font.BOLD|Font.ITALIC, 14);
+        textFont = new Font("Comic Sans MS", Font.BOLD|Font.ITALIC, 14);
         creditos.setFont(textFont);
         creditos.setForeground(Color.BLUE);
         footer.setBorder(BorderFactory.createEmptyBorder(50, 5, 5, 0));
