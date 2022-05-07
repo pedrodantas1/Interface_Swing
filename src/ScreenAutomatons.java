@@ -9,6 +9,9 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
     private AppInterface controller;
     private String title;
     private GridBagConstraints gbc;
+    private Operacao operation = new Estrela();   //Mudar o tipo para se ajustar dinamicamente
+    private int requiredAutomata;
+    private int selectedAutomata;
 
     private Font textFont;
     private Font buttonFont;
@@ -25,11 +28,18 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         this.controller = frame;
         this.title = "Título indefinido";
         this.gbc = new GridBagConstraints();
+        this.requiredAutomata = 0;
+        this.selectedAutomata = 0;
 
         buttonFont = new Font("Arial", Font.BOLD, 16);
         border = BorderFactory.createRaisedBevelBorder();
         
         createButtons();
+    }
+
+    public void setOperation(Operacao operation, int numAutomatos) {
+        this.operation = operation;
+        this.requiredAutomata = numAutomatos;
     }
 
     public void setTitle(String title) {
@@ -43,6 +53,8 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         readyButton.setForeground(Color.BLACK);
         readyButton.setBorder(border);
         readyButton.setFocusPainted(false);
+        readyButton.setActionCommand("makeOperation");
+        readyButton.addActionListener(this);
 
         //Botao de voltar a tela inicial
         backButton = new JButton("Voltar");
@@ -162,6 +174,8 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         JButton b1;
         b1 = new JButton(new ImageIcon(AppInterface.class.getResource("procurar.png")));
         b1.setFocusPainted(false);
+        b1.setActionCommand("searchFile");
+        b1.addActionListener(this);
         gbc.fill =  GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.FIRST_LINE_END;
         gbc.ipadx = -25;
@@ -240,6 +254,8 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         JButton b1;
         b1 = new JButton(new ImageIcon(AppInterface.class.getResource("procurar.png")));
         b1.setFocusPainted(false);
+        b1.setActionCommand("searchFile");
+        b1.addActionListener(this);
         gbc.fill =  GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.LINE_END;
         gbc.ipadx = -25;
@@ -276,6 +292,8 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         //Botao de pesquisar arquivo (FileChooser)
         b1 = new JButton(new ImageIcon(AppInterface.class.getResource("procurar.png")));
         b1.setFocusPainted(false);
+        b1.setActionCommand("searchFile");
+        b1.addActionListener(this);
         gbc.fill =  GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.LINE_END;
         gbc.ipadx = -25;
@@ -323,6 +341,13 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         add(footer, BorderLayout.SOUTH);
     }
 
+    private boolean isValidOperation() {
+        //Vai verificar se os dois automatos sao AFD ou AFN
+
+
+        return true;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         String action = e.getActionCommand();
@@ -330,10 +355,22 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
             selectedAFD = true;
         }else if (action.equals("typeAFN")){
             selectedAFD = false;
-        }else if (action.equals("Uniao")){
-
+        }else if (action.equals("searchFile")){
+            //Abrir file chooser
+            System.out.println("\nSearch File");
+        }else if (action.equals("makeOperation")){
+            if (requiredAutomata == 1 && selectedAutomata == 1){
+                operation.makeOperation();
+            }else if (requiredAutomata == 2 && selectedAutomata == 2){
+                if (isValidOperation()){
+                    operation.makeOperation();
+                }else{
+                    System.out.println("\nOs dois autômatos não são do mesmo tipo!");
+                }
+            }else{
+                System.out.println("\nPor favor, selecione os autômatos necessários!");
+            }
         }
-        
     }
 
 }
