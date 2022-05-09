@@ -4,14 +4,16 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class ScreenAutomatons extends JPanel implements ActionListener {
     private AppInterface controller;
+    private JFileChooser fileChooser;
     private String title;
     private GridBagConstraints gbc;
-    private Operacao operation = new Estrela();   //Mudar o tipo para se ajustar dinamicamente
     private int requiredAutomata;
     private int selectedAutomata;
+    private Operacao operation;
 
     private Font textFont;
     private Font buttonFont;
@@ -171,11 +173,12 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         operationPanel.add(textField, gbc);
 
         //Botao de pesquisar arquivo (FileChooser)
-        JButton b1;
-        b1 = new JButton(new ImageIcon(AppInterface.class.getResource("procurar.png")));
-        b1.setFocusPainted(false);
-        b1.setActionCommand("searchFile");
-        b1.addActionListener(this);
+        SearchButton searchButton;
+        searchButton = new SearchButton(new ImageIcon(AppInterface.class.getResource("procurar.png")));
+        searchButton.setTextField(textField);
+        searchButton.setFocusPainted(false);
+        searchButton.setActionCommand("searchFile");
+        searchButton.addActionListener(this);
         gbc.fill =  GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.FIRST_LINE_END;
         gbc.ipadx = -25;
@@ -184,7 +187,7 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         gbc.gridx = 2;
         gbc.gridy = 0;
         gbc.insets.set(0, 0, 0, 0);
-        operationPanel.add(b1, gbc);
+        operationPanel.add(searchButton, gbc);
 
         //Config do readyButton
         gbc.fill =  GridBagConstraints.NONE;
@@ -251,11 +254,12 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         operationPanel.add(textField, gbc);
 
         //Botao de pesquisar arquivo (FileChooser)
-        JButton b1;
-        b1 = new JButton(new ImageIcon(AppInterface.class.getResource("procurar.png")));
-        b1.setFocusPainted(false);
-        b1.setActionCommand("searchFile");
-        b1.addActionListener(this);
+        SearchButton searchButton;
+        searchButton = new SearchButton(new ImageIcon(AppInterface.class.getResource("procurar.png")));
+        searchButton.setTextField(textField);
+        searchButton.setFocusPainted(false);
+        searchButton.setActionCommand("searchFile");
+        searchButton.addActionListener(this);
         gbc.fill =  GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.LINE_END;
         gbc.ipadx = -25;
@@ -264,7 +268,7 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         gbc.gridx = 2;
         gbc.gridy = 1;
         gbc.insets.set(0, 0, 0, 0);
-        operationPanel.add(b1, gbc);
+        operationPanel.add(searchButton, gbc);
 
         //Label 2
         automatoText = new JLabel("2° autômato:");
@@ -290,10 +294,11 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         operationPanel.add(textField, gbc);
 
         //Botao de pesquisar arquivo (FileChooser)
-        b1 = new JButton(new ImageIcon(AppInterface.class.getResource("procurar.png")));
-        b1.setFocusPainted(false);
-        b1.setActionCommand("searchFile");
-        b1.addActionListener(this);
+        searchButton = new SearchButton(new ImageIcon(AppInterface.class.getResource("procurar.png")));
+        searchButton.setTextField(textField);
+        searchButton.setFocusPainted(false);
+        searchButton.setActionCommand("searchFile");
+        searchButton.addActionListener(this);
         gbc.fill =  GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.LINE_END;
         gbc.ipadx = -25;
@@ -302,7 +307,7 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         gbc.gridx = 2;
         gbc.gridy = 2;
         gbc.insets.set(20, 0, 0, 0);
-        operationPanel.add(b1, gbc);
+        operationPanel.add(searchButton, gbc);
 
         //Config do readyButton
         gbc.fill =  GridBagConstraints.NONE;
@@ -351,13 +356,29 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String action = e.getActionCommand();
+
+        if (action.equals("searchFile")){
+            if (fileChooser == null){
+                fileChooser = new JFileChooser(System.getProperty("user.dir"));
+                fileChooser.addChoosableFileFilter(new AutomatonFilter());
+                fileChooser.setAcceptAllFileFilterUsed(false);
+            }
+            
+            SearchButton source = (SearchButton) e.getSource();
+            int returnVal = fileChooser.showOpenDialog(this);
+            if (returnVal == JFileChooser.APPROVE_OPTION){
+                File file = fileChooser.getSelectedFile();
+                String path = file.getAbsolutePath();
+                source.setPathInTextField(path);
+            }else{
+                System.out.println("\nOperação cancelada!");
+            }
+        }
+
         if (action.equals("typeAFD")){
             selectedAFD = true;
         }else if (action.equals("typeAFN")){
             selectedAFD = false;
-        }else if (action.equals("searchFile")){
-            //Abrir file chooser
-            System.out.println("\nSearch File");
         }else if (action.equals("makeOperation")){
             if (requiredAutomata == 1 && selectedAutomata == 1){
                 operation.makeOperation();

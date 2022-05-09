@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class CustomButton extends JButton {
-
+    
     public CustomButton() {
         super();
     }
