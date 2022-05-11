@@ -397,10 +397,10 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
             selectedAFD = false;
         }else if (action.equals("makeOperation")){
             if (requiredAutomata == 1 && selectedAutomata == 1){
-                operation.makeOperation();
+                createOutputFile(operation.makeOperation());
             }else if (requiredAutomata == 2 && selectedAutomata == 2){
                 if (isValidOperation()){
-                    operation.makeOperation();
+                    createOutputFile(operation.makeOperation());
                 }else{
                     System.out.println("\nOs dois autômatos não são do mesmo tipo!");
                 }
@@ -419,6 +419,34 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         aut.loadTransicoes(docEntrada.getElementsByTagName("transition"));
 
         return aut;
-    } 
+    }
+
+    public void createOutputFile(Automato aut) {
+        ConstrutorDocumentoXML construtorXML = new ConstrutorDocumentoXML();
+        construtorXML.setAutomato(aut);
+        construtorXML.configuraDocumento();
+        EscritorXML escritor = new EscritorXML();
+        escritor.setDocumentXML(construtorXML.getDocumentoConstruido());
+
+        int returnVal = fileChooser.showSaveDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION){
+            File file = fileChooser.getSelectedFile();
+            String path = getPathOutputFile(file);
+            escritor.exportaArquivoXML(path);
+        }else{
+            System.out.println("\nOperação cancelada!");
+        }
+    }
+
+    private String getPathOutputFile(File file) {
+        String extension = AutomatonFilter.getExtension(file);
+        if (extension != null){
+            if (extension.equals("jff")){
+                return file.getAbsolutePath();
+            }
+        }
+
+        return file.getAbsolutePath() + ".jff";
+    }
 
 }

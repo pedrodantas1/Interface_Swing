@@ -17,9 +17,9 @@ public class EscritorXML {
         this.document = document;
     }
 
-    public void exportaArquivoXML(String diretorio, String nomeArquivo) {
+    public void exportaArquivoXML(String path) {
         try{
-            File xml = new File(diretorio, nomeArquivo);
+            File xml = new File(path);
             TransformerFactory tf = TransformerFactory.newInstance();
             Transformer transformer = tf.newTransformer();
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
