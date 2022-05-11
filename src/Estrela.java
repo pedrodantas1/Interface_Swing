@@ -1,16 +1,19 @@
 import java.util.ArrayList;
 
-public class Estrela implements Operacao {
-    private Automato autEntrada;
+public class Estrela extends Operacao {
     
     public Estrela() {
-    }
-
-    public void setAutomatoEntrada(Automato automato) {
-        this.autEntrada = automato;
+        maxAutomaton = 1;
+        qtdAutomaton = 0;
+        automatons = new Automato[maxAutomaton];
     }
 
     public Automato makeOperation() {
+        Automato autEntrada = getAutomaton(0);
+        if (autEntrada == null){
+            System.out.println("Não existe autômato setado!");
+            return null;
+        }
         Automato autSaida = new Automato(autEntrada);
         ArrayList<Estado> estadosFinais = autSaida.getEstadosFinais();
         if (estadosFinais == null){

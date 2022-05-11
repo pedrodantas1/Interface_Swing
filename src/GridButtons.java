@@ -126,7 +126,7 @@ public class GridButtons extends JPanel implements ActionListener {
             newScreen.setTitle("União de dois autômatos");
             newScreen.createScreenTwo();
         }else if (operation.equals("interseccao")){
-            //newScreen.setOperation(new Interseccao(), 2);
+            newScreen.setOperation(new Interseccao(), 2);
             newScreen.setTitle("Intersecção de dois autômatos");
             newScreen.createScreenTwo();
         }else if (operation.equals("concatenacao")){

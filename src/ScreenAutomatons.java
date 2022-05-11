@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import org.w3c.dom.Document;
 
 public class ScreenAutomatons extends JPanel implements ActionListener {
     private AppInterface controller;
@@ -174,7 +175,7 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
 
         //Botao de pesquisar arquivo (FileChooser)
         SearchButton searchButton;
-        searchButton = new SearchButton(new ImageIcon(AppInterface.class.getResource("procurar.png")));
+        searchButton = new SearchButton(new ImageIcon(AppInterface.class.getResource("procurar.png")), 0);
         searchButton.setTextField(textField);
         searchButton.setFocusPainted(false);
         searchButton.setActionCommand("searchFile");
@@ -255,7 +256,7 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
 
         //Botao de pesquisar arquivo (FileChooser)
         SearchButton searchButton;
-        searchButton = new SearchButton(new ImageIcon(AppInterface.class.getResource("procurar.png")));
+        searchButton = new SearchButton(new ImageIcon(AppInterface.class.getResource("procurar.png")), 0);
         searchButton.setTextField(textField);
         searchButton.setFocusPainted(false);
         searchButton.setActionCommand("searchFile");
@@ -294,7 +295,7 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         operationPanel.add(textField, gbc);
 
         //Botao de pesquisar arquivo (FileChooser)
-        searchButton = new SearchButton(new ImageIcon(AppInterface.class.getResource("procurar.png")));
+        searchButton = new SearchButton(new ImageIcon(AppInterface.class.getResource("procurar.png")), 1);
         searchButton.setTextField(textField);
         searchButton.setFocusPainted(false);
         searchButton.setActionCommand("searchFile");
@@ -347,10 +348,23 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
     }
 
     private boolean isValidOperation() {
-        //Vai verificar se os dois automatos sao AFD ou AFN
-
+        //Vai verificar se os dois automatos sao AFD ou AFN (decidir se vai ser implementado ainda)
+        if (selectedAFD){
+            return true;
+        }
 
         return true;
+    }
+
+    private int verifySelectedAut() {
+        int quant = 1;
+        if (requiredAutomata == 2){
+            if (selectedAutomata != 0){
+                quant = 2;
+            }
+        }
+
+        return quant;
     }
 
     @Override
@@ -370,6 +384,8 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
                 File file = fileChooser.getSelectedFile();
                 String path = file.getAbsolutePath();
                 source.setPathInTextField(path);
+                selectedAutomata = verifySelectedAut();
+                operation.setAutomaton(readAutomaton(file), source.getAutomatonID());
             }else{
                 System.out.println("\nOperação cancelada!");
             }
@@ -393,5 +409,16 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
             }
         }
     }
+
+    public Automato readAutomaton(File file) {
+        LeitorXML leitor = new LeitorXML();
+        leitor.carregaArquivoXML(file);
+        Document docEntrada = leitor.getDocumentoLido();
+        Automato aut = new Automato();
+        aut.setEstados(docEntrada.getElementsByTagName("state"));
+        aut.loadTransicoes(docEntrada.getElementsByTagName("transition"));
+
+        return aut;
+    } 
 
 }
