@@ -174,10 +174,8 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
 
         //Botao de pesquisar arquivo (FileChooser)
         SearchButton searchButton;
-        searchButton = new SearchButton(new ImageIcon(AppInterface.class.getResource("procurar.png")), 0);
+        searchButton = new SearchButton(0);
         searchButton.setTextField(textField);
-        searchButton.setFocusPainted(false);
-        searchButton.setActionCommand("searchFile");
         searchButton.addActionListener(this);
         gbc.fill =  GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.FIRST_LINE_END;
@@ -254,10 +252,8 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
 
         //Botao de pesquisar arquivo 1 (FileChooser) 
         SearchButton searchButton;
-        searchButton = new SearchButton(new ImageIcon(AppInterface.class.getResource("procurar.png")), 0);
+        searchButton = new SearchButton(0);
         searchButton.setTextField(textField);
-        searchButton.setFocusPainted(false);
-        searchButton.setActionCommand("searchFile");
         searchButton.addActionListener(this);
         gbc.fill =  GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.LINE_END;
@@ -293,10 +289,8 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         operationPanel.add(textField, gbc);
 
         //Botao de pesquisar arquivo 2 (FileChooser)
-        searchButton = new SearchButton(new ImageIcon(AppInterface.class.getResource("procurar.png")), 1);
+        searchButton = new SearchButton(1);
         searchButton.setTextField(textField);
-        searchButton.setFocusPainted(false);
-        searchButton.setActionCommand("searchFile");
         searchButton.addActionListener(this);
         gbc.fill =  GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.LINE_END;

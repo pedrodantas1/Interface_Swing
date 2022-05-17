@@ -15,6 +15,8 @@ public class AppInterface extends JFrame {
 
     public JPanel createHomeScreen() {
         JPanel mainPanel = new JPanel(new BorderLayout());
+
+        //Header da tela inicial
         JPanel header = new JPanel(new BorderLayout());
         JLabel titulo = new JLabel("Operador de autômatos finitos", JLabel.CENTER);
         Font textFont = new Font("Arial", Font.BOLD, 40);
@@ -25,6 +27,7 @@ public class AppInterface extends JFrame {
         titulo.setBackground(Color.BLACK);
         header.add(titulo, BorderLayout.NORTH);
         
+        //Body da tela inicial
         GridButtons buttonsPanel = new GridButtons(frame, 6, 3);
         String[] buttonNames = {"União", "Intersecção", "Concatenação",
                                 "Complemento", "Estrela", 
@@ -40,6 +43,7 @@ public class AppInterface extends JFrame {
         buttonsPanel.setTextColor(Color.BLACK);
         buttonsPanel.addButtons(buttonNames, actions);
 
+        //Footer da tela inicial
         JPanel footer = new JPanel(new BorderLayout());
         JLabel creditos = new JLabel("<html>Desenvolvido por alunos da UFS - DSI &copy;</html>");
         textFont = new Font("Comic Sans MS", Font.BOLD|Font.ITALIC, 14);
