@@ -82,7 +82,7 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         JRadioButton afdButton = new JRadioButton("AFD");
         afdButton.setFocusPainted(false);
         afdButton.setFont(radioFont);
-        afdButton.setBackground(Color.PINK);
+        afdButton.setBackground(Color.GREEN);
         afdButton.setForeground(Color.BLACK);
         afdButton.setActionCommand("typeAFD");
         afdButton.setSelected(true);
@@ -92,7 +92,7 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         JRadioButton afnButton = new JRadioButton("AFN");
         afnButton.setFocusPainted(false);
         afnButton.setFont(radioFont);
-        afnButton.setBackground(Color.PINK);
+        afnButton.setBackground(Color.GREEN);
         afnButton.setForeground(Color.BLACK);
         afnButton.setActionCommand("typeAFN");
         afnButton.addActionListener(this);
@@ -104,7 +104,7 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
 
         //Organizar box completa
         typeAutBox = new JPanel();
-        typeAutBox.setBackground(Color.PINK);
+        typeAutBox.setBackground(Color.GREEN);
         typeAutBox.setLayout(new BoxLayout(typeAutBox, BoxLayout.LINE_AXIS));
         typeAutBox.add(Box.createRigidArea(new Dimension(10, 40)));
         typeAutBox.add(typeAut);
@@ -135,10 +135,10 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         JLabel titulo = new JLabel(title, JLabel.CENTER);
         Font textFont = new Font("Arial", Font.BOLD, 40);
         titulo.setFont(textFont);
-        titulo.setForeground(Color.WHITE);
-        titulo.setPreferredSize(new Dimension(900, 150));
         titulo.setOpaque(true);
-        titulo.setBackground(Color.BLUE);
+        titulo.setForeground(Color.WHITE);
+        titulo.setBackground(Color.BLACK);
+        titulo.setPreferredSize(new Dimension(900, 150));
         main.add(titulo, BorderLayout.CENTER);
 
         add(main, BorderLayout.NORTH);
@@ -146,22 +146,21 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
 
     private void createBodyOneAut() {
         JPanel operationPanel = new JPanel(new GridBagLayout());
-        operationPanel.setBackground(Color.PINK);
+        operationPanel.setBackground(Color.BLUE);
         operationPanel.setBorder(BorderFactory.createEmptyBorder(0, 125, 0, 125));
 
-        //Selecionar automato
         //Label
         textFont = new Font("Arial", Font.BOLD, 18);
         JLabel automatoText = new JLabel("Autômato:");
         automatoText.setFont(textFont);
-        automatoText.setForeground(Color.BLACK);
+        automatoText.setForeground(Color.WHITE);
         gbc.anchor = GridBagConstraints.FIRST_LINE_START;
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.insets = new Insets(0, 0, 0, 10);
         operationPanel.add(automatoText, gbc);
 
-        //TextField (Por enquanto nao editavel; Atualiza com o path apos pesquisar o arquivo)
+        //TextField
         JTextField textField = new JTextField(40);
         textField.setEditable(false);
         gbc.fill =  GridBagConstraints.HORIZONTAL;
@@ -217,7 +216,7 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
 
     private void createBodyTwoAut() {
         JPanel operationPanel = new JPanel(new GridBagLayout());
-        operationPanel.setBackground(Color.PINK);
+        operationPanel.setBackground(Color.BLUE);
         GridBagConstraints gbc = new GridBagConstraints();
         operationPanel.setBorder(BorderFactory.createEmptyBorder(0, 125, 0, 125));
 
@@ -229,12 +228,11 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         gbc.insets = new Insets(0, 0, 20, 0);
         operationPanel.add(typeAutBox, gbc);
 
-        //Selecionar automato
         //Label 1
         textFont = new Font("Arial", Font.BOLD, 18);
         JLabel automatoText = new JLabel("1° autômato:");
         automatoText.setFont(textFont);
-        automatoText.setForeground(Color.BLACK);
+        automatoText.setForeground(Color.WHITE);
         gbc.anchor = GridBagConstraints.LINE_START;
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -242,7 +240,7 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         gbc.insets .set(0, 0, 0, 10);
         operationPanel.add(automatoText, gbc);
 
-        //TextField (Por enquanto nao editavel; Atualiza com o path apos pesquisar o arquivo)
+        //TextField 1
         JTextField textField = new JTextField(40);
         textField.setEditable(false);
         gbc.fill =  GridBagConstraints.HORIZONTAL;
@@ -254,7 +252,7 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         gbc.insets.set(0, 0, 0, 10);
         operationPanel.add(textField, gbc);
 
-        //Botao de pesquisar arquivo (FileChooser)
+        //Botao de pesquisar arquivo 1 (FileChooser) 
         SearchButton searchButton;
         searchButton = new SearchButton(new ImageIcon(AppInterface.class.getResource("procurar.png")), 0);
         searchButton.setTextField(textField);
@@ -274,7 +272,7 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         //Label 2
         automatoText = new JLabel("2° autômato:");
         automatoText.setFont(textFont);
-        automatoText.setForeground(Color.BLACK);
+        automatoText.setForeground(Color.WHITE);
         gbc.fill =  GridBagConstraints.HORIZONTAL;
         gbc.anchor = GridBagConstraints.LINE_START;
         gbc.gridx = 0;
@@ -282,7 +280,7 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         gbc.insets.set(20, 0, 0, 10);
         operationPanel.add(automatoText, gbc);
 
-        //TextField (Por enquanto nao editavel; Atualiza com o path apos pesquisar o arquivo)
+        //TextField 2
         textField = new JTextField(40);
         textField.setEditable(false);
         gbc.fill =  GridBagConstraints.HORIZONTAL;
@@ -294,7 +292,7 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         gbc.insets.set(20, 0, 0, 10);
         operationPanel.add(textField, gbc);
 
-        //Botao de pesquisar arquivo (FileChooser)
+        //Botao de pesquisar arquivo 2 (FileChooser)
         searchButton = new SearchButton(new ImageIcon(AppInterface.class.getResource("procurar.png")), 1);
         searchButton.setTextField(textField);
         searchButton.setFocusPainted(false);
@@ -341,6 +339,7 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         textFont = new Font("Comic Sans MS", Font.BOLD|Font.ITALIC, 14);
         creditos.setFont(textFont);
         creditos.setForeground(Color.BLUE);
+        footer.setBackground(Color.BLACK);
         footer.setBorder(BorderFactory.createEmptyBorder(50, 5, 5, 0));
         footer.add(creditos, BorderLayout.WEST);
         
