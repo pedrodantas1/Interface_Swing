@@ -394,8 +394,6 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
                 source.setPathInTextField(path);
                 selectedAutomata = verifySelectedAut();
                 operation.setAutomaton(readAutomaton(file), source.getAutomatonID());
-            }else{
-                System.out.println("\nOperação cancelada!");
             }
 
             return;
@@ -419,17 +417,15 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
                 }else{
                     String message;
                     if (selectedAFD){
-                        message = "Os dois autômatos não são AFD!";
+                        message = "Ambos os autômatos precisam ser AFD!";
                     }else{
-                        message = "Os dois autômatos não são AFN!";
+                        message = "Ambos os autômatos precisam ser AFN!";
                     }
-                    JOptionPane.showMessageDialog(null, message);
+                    Dialogs.showMessage(message);
                 }
             }else{
-                JOptionPane.showMessageDialog(this,
-                "Por favor, selecione os autômatos necessários!",
-                  "Autômatos insuficientes",
-                JOptionPane.WARNING_MESSAGE);
+                Dialogs.showMessage("Autômatos insuficientes",
+                "Por favor, selecione os autômatos necessários!");
             }
         }
     }
@@ -446,19 +442,20 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
     }
 
     private void createOutputFile(Automato aut) {
-        ConstrutorDocumentoXML construtorXML = new ConstrutorDocumentoXML();
-        construtorXML.setAutomato(aut);
-        construtorXML.configuraDocumento();
-        EscritorXML escritor = new EscritorXML();
-        escritor.setDocumentXML(construtorXML.getDocumentoConstruido());
+        try{
+            ConstrutorDocumentoXML construtorXML = new ConstrutorDocumentoXML();
+            construtorXML.setAutomato(aut);
+            construtorXML.configuraDocumento();
+            EscritorXML escritor = new EscritorXML();
+            escritor.setDocumentXML(construtorXML.getDocumentoConstruido());
 
-        int returnVal = fileChooser.showSaveDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION){
-            File file = fileChooser.getSelectedFile();
-            String path = getPathOutputFile(file);
-            escritor.exportaArquivoXML(path);
-        }else{
-            System.out.println("\nOperação cancelada!");
+            int returnVal = fileChooser.showSaveDialog(this);
+            if (returnVal == JFileChooser.APPROVE_OPTION){
+                File file = fileChooser.getSelectedFile();
+                String path = getPathOutputFile(file);
+                escritor.exportaArquivoXML(path);
+            }
+        }catch (NullPointerException e){
         }
     }
 

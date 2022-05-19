@@ -11,18 +11,18 @@ public class Estrela extends Operacao {
     public Automato makeOperation() {
         Automato autEntrada = getAutomaton(0);
         if (autEntrada == null){
-            System.out.println("Não existe autômato setado!");
+            Dialogs.showMessage("O autômato setado é inválido!");
             return null;
         }
         Automato autSaida = new Automato(autEntrada);
         ArrayList<Estado> estadosFinais = autSaida.getEstadosFinais();
         if (estadosFinais == null){
-            System.out.println("Não existem estados finais.");
+            Dialogs.showMessage("O autômato não possui estados finais!");
             return null;
         }
         Estado antigoInicial = autSaida.getEstadoInicial();
         if (antigoInicial == null){
-            System.out.println("Não existe estado inicial.");
+            Dialogs.showMessage("O autômato não possui estado inicial!");
             return null;
         }
         //Criar um estado novo (inicial e final)

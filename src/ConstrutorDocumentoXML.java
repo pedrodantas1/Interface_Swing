@@ -30,7 +30,8 @@ public class ConstrutorDocumentoXML {
             this.document = db.newDocument();
             setEstruturaDocumento();
         } catch (ParserConfigurationException e) {
-            e.printStackTrace();
+            Dialogs.showMessage("Erro ao exportar arquivo", 
+            "Não foi possível estruturar arquivo xml!");
         }
     }
 

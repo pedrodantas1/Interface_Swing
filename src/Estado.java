@@ -221,8 +221,6 @@ public class Estado {
                 transicao.setDestino(transicao.getDestino()+cont);
             }
         }
-            
-        
     }
 
     @Override
