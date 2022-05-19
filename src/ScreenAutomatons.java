@@ -340,12 +340,28 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
     }
 
     private boolean isValidOperation() {
-        //Vai verificar se os dois automatos sao AFD ou AFN (decidir se vai ser implementado ainda)
+        boolean valid = false;
         if (selectedAFD){
-            return true;
+            valid = areBothAFD();
+        }else{
+            valid = areBothAFN();
         }
 
-        return true;
+        return valid;
+    }
+
+    private boolean areBothAFD() {
+        boolean firstIsAFN = operation.getAutomaton(0).isAFN();
+        boolean secondIsAFN = operation.getAutomaton(1).isAFN();
+
+        return !firstIsAFN && !secondIsAFN;
+    }
+
+    private boolean areBothAFN() {
+        boolean firstIsAFN = operation.getAutomaton(0).isAFN();
+        boolean secondIsAFN = operation.getAutomaton(1).isAFN();
+
+        return firstIsAFN && secondIsAFN;
     }
 
     private int verifySelectedAut() {
@@ -401,14 +417,19 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
                 if (isValidOperation()){
                     createOutputFile(operation.makeOperation());
                 }else{
-                    System.out.println("\nOs dois autômatos não são do mesmo tipo!");
+                    String message;
+                    if (selectedAFD){
+                        message = "Os dois autômatos não são AFD!";
+                    }else{
+                        message = "Os dois autômatos não são AFN!";
+                    }
+                    JOptionPane.showMessageDialog(null, message);
                 }
             }else{
                 JOptionPane.showMessageDialog(this,
                 "Por favor, selecione os autômatos necessários!",
-                "Autômatos insuficientes",
+                  "Autômatos insuficientes",
                 JOptionPane.WARNING_MESSAGE);
-
             }
         }
     }
