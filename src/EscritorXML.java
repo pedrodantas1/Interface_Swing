@@ -1,6 +1,7 @@
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
+import javax.swing.JOptionPane;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
@@ -26,9 +27,12 @@ public class EscritorXML {
             DOMSource domSource = new DOMSource(document);
             StreamResult streamResult = new StreamResult(xml);
             transformer.transform(domSource, streamResult);
-            System.out.println("\nArquivo exportado com sucesso!\n\n");
+            
+            JOptionPane.showMessageDialog(null, 
+            "Arquivo exportado com sucesso!");
         }catch (TransformerException e) {
-            System.out.println("\nNao foi possivel exportar o arquivo!\n\n");
+            JOptionPane.showMessageDialog(null, 
+            "Nao foi possivel exportar o arquivo!");
         }
     }
 }

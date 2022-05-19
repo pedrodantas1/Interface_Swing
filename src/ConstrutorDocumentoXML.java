@@ -5,6 +5,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Attr;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class ConstrutorDocumentoXML {
     private Automato automato;
@@ -24,7 +25,8 @@ public class ConstrutorDocumentoXML {
             this.document = db.newDocument();
             setEstruturaDocumento();
         } catch (ParserConfigurationException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, 
+            "Nao foi possivel exportar o arquivo!");
         }
     }
 

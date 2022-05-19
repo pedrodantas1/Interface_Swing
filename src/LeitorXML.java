@@ -5,6 +5,7 @@ import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import java.io.File;
 import java.io.IOException;
+import javax.swing.JOptionPane;
 
 public class LeitorXML {
     private Document document;
@@ -19,8 +20,8 @@ public class LeitorXML {
             this.document = db.parse(file);
             document.getDocumentElement().normalize();
         }catch (ParserConfigurationException | SAXException | IOException e) {
-            System.out.printf("%nOcorreu algo de errado ao tentar carregar o arquivo!%n%n");
-            System.exit(0);
+            JOptionPane.showMessageDialog(null, 
+            "Ocorreu algo de errado ao tentar carregar o arquivo!");
         }
     }
 

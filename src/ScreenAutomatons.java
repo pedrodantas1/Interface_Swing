@@ -215,7 +215,6 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
     private void createBodyTwoAut() {
         JPanel operationPanel = new JPanel(new GridBagLayout());
         operationPanel.setBackground(Color.BLUE);
-        GridBagConstraints gbc = new GridBagConstraints();
         operationPanel.setBorder(BorderFactory.createEmptyBorder(0, 125, 0, 125));
 
         //Config do typeAutBox
@@ -382,13 +381,20 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
             }else{
                 System.out.println("\nOperação cancelada!");
             }
+
+            return;
         }
 
         if (action.equals("typeAFD")){
             selectedAFD = true;
-        }else if (action.equals("typeAFN")){
+            return;
+        }
+        if (action.equals("typeAFN")){
             selectedAFD = false;
-        }else if (action.equals("makeOperation")){
+            return;
+        }
+        
+        if (action.equals("makeOperation")){
             if (requiredAutomata == 1 && selectedAutomata == 1){
                 createOutputFile(operation.makeOperation());
             }else if (requiredAutomata == 2 && selectedAutomata == 2){
@@ -398,12 +404,16 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
                     System.out.println("\nOs dois autômatos não são do mesmo tipo!");
                 }
             }else{
-                System.out.println("\nPor favor, selecione os autômatos necessários!");
+                JOptionPane.showMessageDialog(this,
+                "Por favor, selecione os autômatos necessários!",
+                "Autômatos insuficientes",
+                JOptionPane.WARNING_MESSAGE);
+
             }
         }
     }
 
-    public Automato readAutomaton(File file) {
+    private Automato readAutomaton(File file) {
         LeitorXML leitor = new LeitorXML();
         leitor.carregaArquivoXML(file);
         Document docEntrada = leitor.getDocumentoLido();
@@ -414,7 +424,7 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         return aut;
     }
 
-    public void createOutputFile(Automato aut) {
+    private void createOutputFile(Automato aut) {
         ConstrutorDocumentoXML construtorXML = new ConstrutorDocumentoXML();
         construtorXML.setAutomato(aut);
         construtorXML.configuraDocumento();
