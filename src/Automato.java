@@ -266,6 +266,9 @@ public class Automato {
     public boolean isAFN() {
         for (Estado estado : getEstados()){
             ArrayList<Transicao> auxTrans = estado.getTransicoesAceitas();
+            if (auxTrans == null){
+                continue;
+            }
             for (Transicao transicao : auxTrans){
                 if (transicao.getValor().equals("lambda")){
                     return true;

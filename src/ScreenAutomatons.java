@@ -25,6 +25,8 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
     private JButton readyButton;
     private JButton backButton;
     private JPanel typeAutBox;
+    private JTextField textField1;
+    private JTextField textField2;
 
     public ScreenAutomatons(AppInterface frame) {
         super(new BorderLayout());
@@ -74,7 +76,7 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
 
         //Criar botoes de escolha entre AFD e AFN
         textFont = new Font("Arial", Font.BOLD|Font.ITALIC, 18);
-        JLabel typeAut = new JLabel("Tipo do autômato:");
+        JLabel typeAut = new JLabel("Tipo do autômato de saída:");
         typeAut.setFont(textFont);
         typeAut.setForeground(Color.BLACK);
 
@@ -238,8 +240,8 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         operationPanel.add(automatoText, gbc);
 
         //TextField 1
-        JTextField textField = new JTextField(40);
-        textField.setEditable(false);
+        textField1 = new JTextField(40);
+        textField1.setEditable(false);
         gbc.fill =  GridBagConstraints.HORIZONTAL;
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.ipady = 5;
@@ -247,12 +249,12 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         gbc.gridx = 1;
         gbc.gridy = 1;
         gbc.insets.set(0, 0, 0, 10);
-        operationPanel.add(textField, gbc);
+        operationPanel.add(textField1, gbc);
 
         //Botao de pesquisar arquivo 1 (FileChooser) 
         SearchButton searchButton;
         searchButton = new SearchButton(0);
-        searchButton.setTextField(textField);
+        searchButton.setTextField(textField1);
         searchButton.addActionListener(this);
         gbc.fill =  GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.LINE_END;
@@ -276,8 +278,8 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         operationPanel.add(automatoText, gbc);
 
         //TextField 2
-        textField = new JTextField(40);
-        textField.setEditable(false);
+        textField2 = new JTextField(40);
+        textField2.setEditable(false);
         gbc.fill =  GridBagConstraints.HORIZONTAL;
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.ipady = 5;
@@ -285,11 +287,11 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         gbc.gridx = 1;
         gbc.gridy = 2;
         gbc.insets.set(20, 0, 0, 10);
-        operationPanel.add(textField, gbc);
+        operationPanel.add(textField2, gbc);
 
         //Botao de pesquisar arquivo 2 (FileChooser)
         searchButton = new SearchButton(1);
-        searchButton.setTextField(textField);
+        searchButton.setTextField(textField2);
         searchButton.addActionListener(this);
         gbc.fill =  GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.LINE_END;
@@ -339,6 +341,7 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         add(footer, BorderLayout.SOUTH);
     }
 
+    /*
     private boolean isValidOperation() {
         boolean valid = false;
         if (selectedAFD){
@@ -349,19 +352,22 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
 
         return valid;
     }
+    */
+
+    /*
+    private boolean areBothAFN() {
+        boolean firstIsAFN = operation.getAutomaton(0).isAFN();
+        boolean secondIsAFN = operation.getAutomaton(1).isAFN();
+
+        return firstIsAFN && secondIsAFN;
+    }
+    */
 
     private boolean areBothAFD() {
         boolean firstIsAFN = operation.getAutomaton(0).isAFN();
         boolean secondIsAFN = operation.getAutomaton(1).isAFN();
 
         return !firstIsAFN && !secondIsAFN;
-    }
-
-    private boolean areBothAFN() {
-        boolean firstIsAFN = operation.getAutomaton(0).isAFN();
-        boolean secondIsAFN = operation.getAutomaton(1).isAFN();
-
-        return firstIsAFN && secondIsAFN;
     }
 
     private int verifySelectedAut() {
@@ -409,20 +415,27 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         }
         
         if (action.equals("makeOperation")){
+            //Para as operações que exigem apenas 1 autômato
             if (requiredAutomata == 1 && selectedAutomata == 1){
                 createOutputFile(operation.makeOperation());
+            //Para as operações que exigem 2 autômatos
             }else if (requiredAutomata == 2 && selectedAutomata == 2){
-                if (isValidOperation()){
-                    createOutputFile(operation.makeOperation());
-                }else{
-                    String message;
+                //Adaptações para a operação de intersecção
+                if (operation instanceof Interseccao){
                     if (selectedAFD){
-                        message = "Ambos os autômatos precisam ser AFD!";
+                        makeInterseccaoAFD();
                     }else{
-                        message = "Ambos os autômatos precisam ser AFN!";
+                        if (areBothAFD()){
+                            createOutputFile(operation.makeOperation());
+                        }else{
+                            Dialogs.showMessage("Ambos os autômatos precisam ser AFD!");
+                        }
                     }
-                    Dialogs.showMessage(message);
+                //Para as demais operações (pode necessitar de ajustes)
+                }else {
+                    createOutputFile(operation.makeOperation());
                 }
+            //Caso não haja os autômatos necessários selecionados
             }else{
                 Dialogs.showMessage("Autômatos insuficientes",
                 "Por favor, selecione os autômatos necessários!");
@@ -468,6 +481,23 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         }
 
         return file.getAbsolutePath() + ".jff";
+    }
+
+    private void makeInterseccaoAFD() {
+        String aut1 = textField1.getText();
+        String aut2 = textField2.getText();
+        int returnVal = fileChooser.showSaveDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION){
+            File file = fileChooser.getSelectedFile();
+            String autSaida = getPathOutputFile(file);
+            try {
+                InterseccaoAFD inter = new InterseccaoAFD(aut1, aut2, autSaida);
+                inter.juntarAFD();
+                Dialogs.showMessage("Arquivo exportado com sucesso!");
+            }catch (Exception e){
+                Dialogs.showMessage("Ambos os autômatos precisam ser AFD!");
+            }
+        }
     }
 
 }
