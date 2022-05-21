@@ -343,28 +343,6 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         add(footer, BorderLayout.SOUTH);
     }
 
-    /*
-    private boolean isValidOperation() {
-        boolean valid = false;
-        if (selectedAFD){
-            valid = areBothAFD();
-        }else{
-            valid = areBothAFN();
-        }
-
-        return valid;
-    }
-    */
-
-    /*
-    private boolean areBothAFN() {
-        boolean firstIsAFN = operation.getAutomaton(0).isAFN();
-        boolean secondIsAFN = operation.getAutomaton(1).isAFN();
-
-        return firstIsAFN && secondIsAFN;
-    }
-    */
-
     private boolean areBothAFD() {
         boolean firstIsAFN = operation.getAutomaton(0).isAFN();
         boolean secondIsAFN = operation.getAutomaton(1).isAFN();

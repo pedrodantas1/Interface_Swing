@@ -13,7 +13,7 @@ public class JFLAPExecutor {
     
     public static void openJFLAP() {
         if (Dialogs.showConfirmDialog("Abrir JFLAP", 
-    "Você deseja abrir o JFLAP?") != JOptionPane.OK_OPTION){
+        "Você deseja abrir o JFLAP?") != JOptionPane.OK_OPTION){
             return;
         }
 
@@ -24,9 +24,9 @@ public class JFLAPExecutor {
 
         jflapFile = getJFLAP();
         if (jflapFile == null){
-            Dialogs.showMessage("O JFLAP não foi encontrado!");
+            Dialogs.showMessage("O JFLAP não foi encontrado na pasta padrão!");
             if (Dialogs.showConfirmDialog("Pesquisar JFLAP", 
-        "Você deseja pesquisar onde se encontra o JFLAP?") != JOptionPane.OK_OPTION){
+            "Você deseja pesquisar onde se encontra o JFLAP?") != JOptionPane.OK_OPTION){
                 return;
             }
 
