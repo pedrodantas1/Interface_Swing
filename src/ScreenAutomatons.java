@@ -5,6 +5,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.w3c.dom.Document;
 
 public class ScreenAutomatons extends JPanel implements ActionListener {
@@ -27,6 +31,8 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
     private JPanel typeAutBox;
     private JTextField textField1;
     private JTextField textField2;
+
+    private String directoryFLAP = "JFLAP";
 
     public ScreenAutomatons(AppInterface frame) {
         super(new BorderLayout());
@@ -467,6 +473,7 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
                 File file = fileChooser.getSelectedFile();
                 String path = getPathOutputFile(file);
                 escritor.exportaArquivoXML(path);
+                openJFLAP();
             }
         }catch (NullPointerException e){
         }
@@ -494,10 +501,67 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
                 InterseccaoAFD inter = new InterseccaoAFD(aut1, aut2, autSaida);
                 inter.juntarAFD();
                 Dialogs.showMessage("Arquivo exportado com sucesso!");
+                openJFLAP();
             }catch (Exception e){
                 Dialogs.showMessage("Ambos os autômatos precisam ser AFD!");
             }
         }
+    }
+
+    private void openJFLAP() {
+        if (Dialogs.showConfirmDialog("Abrir JFLAP", 
+        "Você deseja abrir o JFLAP?") != JOptionPane.OK_OPTION){
+            return;
+        }
+
+        if (isJFLAPAlreadyOpen()){
+            Dialogs.showMessage("O JFLAP já se encontra aberto!");
+            return;
+        }
+
+        File jflap = getJFLAP();
+        if (jflap == null){
+            Dialogs.showMessage("O JFLAP não foi encontrado!");
+            return;
+        }
+
+        try{
+            Desktop.getDesktop().open(jflap);
+        }catch (UnsupportedOperationException e){
+            Dialogs.showMessage("Não foi possível abrir o arquivo .jar!");
+        }catch (IOException e){
+            Dialogs.showMessage("Ocorreu algum erro com o arquivo do JFLAP!");
+        }
+    }
+
+    private File getJFLAP() {
+        File dir = new File(directoryFLAP);
+        File[] files = dir.listFiles();
+
+        if (files != null){
+            for (File file : files){
+                if (file.getName().equals("JFLAP.jar")){
+                    return file;
+                }
+            }
+        }
+        
+        return null;
+    }
+
+    private boolean isJFLAPAlreadyOpen() {
+        List<ProcessHandle> processes = ProcessHandle.allProcesses().collect(Collectors.toList());
+        int qtd = 0;
+        for (ProcessHandle p : processes) {
+            String command = p.info().command().orElse("");
+            if (command.contains("javaw.exe")){
+                qtd++;
+                if (qtd >= 2)
+                    return true;
+            }
+        }
+
+        return false;
     }
 
 }

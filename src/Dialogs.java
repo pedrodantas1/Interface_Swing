@@ -11,4 +11,9 @@ public class Dialogs {
         JOptionPane.INFORMATION_MESSAGE);
     }
 
+    public static int showConfirmDialog(String title ,String message) {
+        return JOptionPane.showConfirmDialog(null, message, title,
+                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+    }
+
 }
